@@ -1,0 +1,17 @@
+{
+  "name": "Dispensa di casa",
+  "short_name": "Dispensa",
+  "description": "Frigo, freezer, dispensa, lista della spesa e ricette",
+  "lang": "it",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F5F6F3",
+  "theme_color": "#1F5C46",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dispensa di casa</title>
+  <meta name="description" content="Frigo, freezer, dispensa, lista della spesa e ricette">
+  <meta name="theme-color" content="#1F5C46">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Dispensa">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <nav class="sidebar" aria-label="Sezioni">
+      <div class="brand">
+        <img src="icons/icon-192.png" alt="" width="36" height="36">
+        <div><strong>Dispensa</strong><span>di casa</span></div>
+      </div>
+      <div class="navlist" id="navSide"></div>
+      <div class="sync" id="syncSide"></div>
+    </nav>
+    <main id="main" tabindex="-1"></main>
+    <aside class="side" id="side" aria-label="Lista della spesa"></aside>
+    <nav class="tabbar" id="navTab" aria-label="Sezioni"></nav>
+  </div>
+  <div id="sheets"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/recipes.js"></script>
+  <script src="js/starter.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
