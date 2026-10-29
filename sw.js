@@ -1,5 +1,5 @@
 /* Service worker: rende l'app disponibile offline e mostra le notifiche push. */
-const VERSION = 'dispensa-v1';
+const VERSION = 'dispensa-v2';
 const SHELL = [
   './', './index.html', './manifest.webmanifest',
   './css/app.css', './js/config.js', './js/recipes.js', './js/starter.js', './js/app.js',
@@ -18,7 +18,7 @@ const CACHE_HOSTS = ['www.gstatic.com', 'cdn.jsdelivr.net'];
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
     const c = await caches.open(VERSION);
-    await c.addAll(SHELL);
+    await c.addAll(SHELL.map((u) => new Request(u, { cache: 'reload' })));
     await Promise.all(LIBS.map(async (u) => {
       try { const r = await fetch(u, { mode: 'cors' }); if (r.ok) await c.put(u, r); } catch (_) {}
     }));
@@ -43,7 +43,7 @@ self.addEventListener('fetch', (e) => {
   if (req.mode === 'navigate') {
     e.respondWith((async () => {
       try {
-        const net = await fetch(req);
+        const net = await fetch(req, { cache: 'no-cache' });
         const c = await caches.open(VERSION); c.put('./index.html', net.clone());
         return net;
       } catch (_) {
@@ -56,7 +56,7 @@ self.addEventListener('fetch', (e) => {
   e.respondWith((async () => {
     const c = await caches.open(VERSION);
     const hit = await c.match(req, { ignoreSearch: same });
-    const refresh = fetch(req).then((r) => { if (r && r.ok) c.put(req, r.clone()); return r; }).catch(() => null);
+    const refresh = fetch(req, same ? { cache: 'no-cache' } : undefined).then((r) => { if (r && r.ok) c.put(req, r.clone()); return r; }).catch(() => null);
     if (hit) { if (same) e.waitUntil(refresh); return hit; }
     return (await refresh) || Response.error();
   })());
