@@ -1,0 +1,20 @@
+name: Notifiche dispensa
+on:
+  schedule:
+    - cron: '0 16 * * *'   # ogni giorno alle 16:00 UTC (17:00 in inverno, 18:00 in estate in Italia)
+  workflow_dispatch: {}    # pulsante "Run workflow" per provarlo subito
+jobs:
+  notifica:
+    runs-on: ubuntu-latest
+    if: ${{ vars.NOTIFICHE_ATTIVE == 'si' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --no-audit --no-fund
+        working-directory: scripts
+      - run: node notify.mjs
+        working-directory: scripts
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          APP_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
